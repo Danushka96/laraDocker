@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+use Illuminate\Contracts\Cache\Factory;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,4 +15,10 @@
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/users',function(){
+    $users = Cache::rememberForever('user-list', function () {
+        return User::all();
+    });
+    return $users;
 });
